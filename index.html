@@ -162,18 +162,24 @@ var assetId = (params.get('id') || '').trim();
 if (!assetId) {
   document.getElementById('app').innerHTML = '<div class="error-box">⚠️ Thiếu mã CCDC. Vui lòng quét lại mã QR.</div>';
 } else {
-  fetch(API_URL + '?id=' + encodeURIComponent(assetId))
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.error) {
-        document.getElementById('app').innerHTML = '<div class="error-box">❌ ' + data.error + '</div>';
-      } else {
-        renderCCDC(data);
-      }
-    })
-    .catch(function() {
-      document.getElementById('app').innerHTML = '<div class="error-box">❌ Không thể kết nối máy chủ. Vui lòng thử lại.</div>';
-    });
+  // Dùng JSONP để tránh lỗi CORS
+  var cbName = 'cb_' + Date.now();
+  window[cbName] = function(data) {
+    delete window[cbName];
+    document.getElementById('jsonp-script').remove();
+    if (data.error) {
+      document.getElementById('app').innerHTML = '<div class="error-box">❌ ' + data.error + '</div>';
+    } else {
+      renderCCDC(data);
+    }
+  };
+  var s = document.createElement('script');
+  s.id = 'jsonp-script';
+  s.onerror = function() {
+    document.getElementById('app').innerHTML = '<div class="error-box">❌ Không thể kết nối máy chủ. Vui lòng thử lại.</div>';
+  };
+  s.src = API_URL + '?id=' + encodeURIComponent(assetId) + '&callback=' + cbName;
+  document.head.appendChild(s);
 }
 </script>
 </body>
