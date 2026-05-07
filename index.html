@@ -30,8 +30,8 @@ body{font-family:"Be Vietnam Pro",Arial,sans-serif;background:var(--bg);color:va
 .card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:18px;}
 .title{font-size:1.35rem;font-weight:800;color:var(--navy-light);text-transform:uppercase;border-bottom:3px solid var(--navy-light);padding-bottom:10px;margin-bottom:16px;}
 .row{margin-bottom:12px;line-height:1.55;font-size:1rem;}
-.label{font-weight:800;color:#1a2a3a;}
-.value{color:#0057b8;font-weight:700;}
+.label{font-weight:800;color:#1a2a3a;font-size:1rem;}
+.value{color:#0057b8;font-weight:700;font-size:1rem;}
 .asset-code{color:#0057b8;font-weight:800;}
 .section{margin-top:18px;padding-top:14px;border-top:1px dashed var(--border);}
 .link{color:#0057b8;font-weight:800;text-decoration:none;border-bottom:1px dashed #0057b8;}
@@ -152,7 +152,6 @@ function renderCCDC(a) {
     + (has(a['NamSD'])         ? '<div class="row"><span class="label">Năm sử dụng:</span> <span class="value">' + r(a['NamSD']) + '</span></div>' : '')
     + (has(a['TinhtrangCCDC']) ? '<div class="row"><span class="label">Tình trạng CCDC:</span> <span class="value">' + r(a['TinhtrangCCDC']) + '</span></div>' : '')
     + extraSection
-    + '<div class="footer">Chi cục Hải quan khu vực VIII</div>'
     + '</div>';
 }
 
